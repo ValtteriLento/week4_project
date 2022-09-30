@@ -15,16 +15,16 @@ body {
   box-shadow: #eceff1;
 }
 
+h1 {
+  text-align: center;
+}
+
 img {
   display: block;
 }
 
 .show-info {
   width: 100%;
-}
-
-h1.show-info {
-  text-align: center;
 }
 
 @media (min-width: 800px) {
@@ -40,7 +40,7 @@ h1.show-info {
   img {
     margin: auto;
   }
-  p.show-info {
+  p {
     text-align: center;
     padding: 10px;
   }

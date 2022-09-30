@@ -139,49 +139,69 @@ if (document.readyState !== "loading") {
 function initializeCode() {
   var shows = document.getElementById("body");
   var submitDataButton = document.getElementById("submit-data");
-  submitDataButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var queryParameter, url, datasetPromise, datasetJSON;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            queryParameter = document.getElementById("input-show");
-            url = "https://api.tvmaze.com/search/shows?q=" + queryParameter;
-            _context.next = 4;
-            return fetch(url);
 
-          case 4:
-            datasetPromise = _context.sent;
-            _context.next = 7;
-            return datasetPromise.json();
+  function getDataset() {
+    return _getDataset.apply(this, arguments);
+  }
 
-          case 7:
-            datasetJSON = _context.sent;
-            datasetJSON.forEach(function (show) {
-              var div1 = document.createElement("div");
-              var img = document.createElement("img");
-              var div2 = document.createElement("div");
-              var h1 = document.createElement("h1");
-              var p = document.createElement("p");
-              div1.classList = "show-data";
-              img.src = show.image.medium;
-              div2.classList = "show-info";
-              h1.innerText = show.title;
-              p.innerText = show.summary;
-              div1.appendChild(img);
-              div1.appendChild(div2);
-              div2.appendChild(h1);
-              div2.appendChild(p);
-              shows.appendChild(div1);
-            });
+  function _getDataset() {
+    _getDataset = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var queryParameter, url, datasetPromise, datasetJSON;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              queryParameter = document.getElementById("input-show").value;
+              url = "https://api.tvmaze.com/search/shows?q=" + queryParameter;
+              _context.next = 4;
+              return fetch(url);
 
-          case 9:
-          case "end":
-            return _context.stop();
+            case 4:
+              datasetPromise = _context.sent;
+              _context.next = 7;
+              return datasetPromise.json();
+
+            case 7:
+              datasetJSON = _context.sent;
+              console.log(datasetJSON);
+              datasetJSON.forEach(function (show) {
+                var div1 = document.createElement("div");
+                var img = document.createElement("img");
+                var div2 = document.createElement("div");
+                var h1 = document.createElement("h1");
+                var p = document.createElement("p");
+                div1.classList = "show-data";
+
+                if (show.show.image.medium != null) {
+                  img.src = show.show.image.medium;
+                } else {
+                  img.alt = "image";
+                }
+
+                img.src = show.show.image.medium;
+                div2.classList = "show-info";
+                h1.innerText = show.show.name;
+                p.innerHTML = show.show.summary;
+                div1.appendChild(img);
+                div1.appendChild(div2);
+                div2.appendChild(h1);
+                div2.appendChild(p);
+                shows.appendChild(div1);
+              });
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
         }
-      }
-    }, _callee);
-  })));
+      }, _callee);
+    }));
+    return _getDataset.apply(this, arguments);
+  }
+
+  submitDataButton.addEventListener("click", function () {
+    getDataset();
+  });
 }
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

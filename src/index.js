@@ -11,13 +11,15 @@ function initializeCode() {
   const shows = document.getElementById("body");
   const submitDataButton = document.getElementById("submit-data");
 
-  submitDataButton.addEventListener("click", async function () {
-    const queryParameter = document.getElementById("input-show");
+  async function getDataset() {
+    const queryParameter = document.getElementById("input-show").value;
 
     const url = "https://api.tvmaze.com/search/shows?q=" + queryParameter;
 
     const datasetPromise = await fetch(url);
     const datasetJSON = await datasetPromise.json();
+
+    console.log(datasetJSON);
 
     datasetJSON.forEach((show) => {
       let div1 = document.createElement("div");
@@ -27,10 +29,15 @@ function initializeCode() {
       let p = document.createElement("p");
 
       div1.classList = "show-data";
-      img.src = show.image.medium;
+      if (show.show.image.medium != null) {
+        img.src = show.show.image.medium;
+      } else {
+        img.alt = "image";
+      }
+      img.src = show.show.image.medium;
       div2.classList = "show-info";
-      h1.innerText = show.title;
-      p.innerText = show.summary;
+      h1.innerText = show.show.name;
+      p.innerHTML = show.show.summary;
 
       div1.appendChild(img);
       div1.appendChild(div2);
@@ -38,5 +45,8 @@ function initializeCode() {
       div2.appendChild(p);
       shows.appendChild(div1);
     });
+  }
+  submitDataButton.addEventListener("click", function () {
+    getDataset();
   });
 }
